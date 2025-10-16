@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>الابتكار — الخدمات</title>
+  <meta name="description" content="خدمات التوظيف للباحثين عن عمل وأصحاب العمل — خطط الشركات الصغيرة والمتوسطة، الشركات الكبرى، والبحث التنفيذي." />
+  <link rel="stylesheet" href="./styles-ar.css" />
+
+  <style>
+    /* صفحة الخدمات: تنسيقات خفيفة خاصة بالمحتوى فقط */
+    :root{
+      --ink:#232334; --muted:#6b6a7a; --title:#2e2b4f; --accent:#e76f51;
+      --card:#ffffff; --shadow:0 8px 25px rgba(0,0,0,.08); --radius:16px;
+    }
+    header.services-header{
+      text-align:center; padding:60px 20px 30px;
+    }
+    header.services-header h1{
+      font-size:clamp(1.8rem, 2.5vw + 1rem, 2.8rem);
+      color:var(--title); margin:0 0 10px; letter-spacing:.2px;
+    }
+    header.services-header h1 span{ color:var(--accent); }
+    header.services-header p{
+      max-width:720px; margin:0 auto; color:var(--muted); font-size:1rem;
+    }
+
+    main.services-main{ padding:40px 0 80px; }
+    section h2{
+      text-align:center; font-size:1.8rem; color:var(--title); margin:20px 0 10px;
+    }
+    section .subtitle{
+      text-align:center; color:var(--muted); max-width:680px; margin:0 auto 40px;
+    }
+
+    .card-box{
+      background:var(--card); border-radius:var(--radius);
+      padding:40px 30px; box-shadow:var(--shadow); text-align:center;
+      transition:transform .2s ease;
+    }
+    .card-box:hover{ transform:translateY(-3px); }
+    .card-box p{ max-width:700px; margin:0 auto 22px; color:#5b5a66; }
+
+    .btn-pill{
+      display:inline-block; background:linear-gradient(90deg,#4f46e5,#9333ea); color:#fff;
+      padding:12px 24px; border:none; border-radius:30px; font-weight:800; text-decoration:none;
+      transition:opacity .2s ease;
+    }
+    .btn-pill:hover{ opacity:.9; }
+
+    /* احتواء أي انزياح عرضي غير مقصود */
+    html, body { overflow-x: hidden; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR بعرض الشاشة ===== -->
+  <nav class="navbar" style="background-color: #2e2b4f;">
+    <div class="navbar-inner container">
+      <!-- يمين: اللوغو + الاسم -->
+      <div class="logo">
+        <img src="../assets/photos/LOGO.png" alt="شعار الابتكار" />
+        <h3>الابتكار</h3>
+      </div>
+
+      <!-- الوسط: الروابط -->
+      <ul class="nav-links">
+        <li><a href="./index-ar.html">الرئيسية</a></li>
+        <li><a href="./services-ar.html" class="is-active" aria-current="page">الخدمات</a></li>
+        <li><a href="./about/index-ar.html">من نحن</a></li>
+      </ul>
+
+      <!-- اليسار: زر اللغة للنسخة الإنجليزية لهذه الصفحة -->
+      <a href="../services.html" class="lang-btn" lang="en" hreflang="en" aria-label="Switch to English">
+        <span class="lang-text">English</span>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <path fill="currentColor" d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm6.93 6h-3.11a15.6 15.6 0 0 0-1.13-3.27A8.03 8.03 0 0 1 18.93 8ZM12 4c.67.86 1.57 2.55 2.07 4H9.93C10.43 6.55 11.33 4.86 12 4ZM7.31 8H4.07A8.03 8.03 0 0 1 9.31 4.73 15.6 15.6 0 0 0 7.31 8Zm0 8H4.07A8.03 8.03 0 0 1 9.31 19.27 15.6 15.6 0 0 1 7.31 16Zm1.62 0h6.14c-.5 1.45-1.4 3.14-2.07 4-.67-.86-1.57-2.55-2.07-4ZM20 12c0 .7-.08 1.37-.24 2h-3.34c.12-.65.18-1.32.18-2s-.06-1.35-.18-2h3.34c.16.63.24 1.3.24 2Zm-8 0c0 .68-.06 1.35-.18 2H8.18A10.9 10.9 0 0 1 8 12c0-.7.06-1.37.18-2h3.64c.12.65.18 1.32.18 2Zm6.93 4h-3.11c-.3 1.04-.7 2.06-1.13 3.27A8.03 8.03 0 0 0 18.93 16Z"/>
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===== HEADER ===== -->
+  <header class="services-header container">
+    <h1>مجموعة كاملة من خدمات <span>الموارد البشرية</span> والتوظيف.</h1>
+    <p>
+      سواء كنت تحتاج لتوسيع فريقك أو استقطاب مهارات متخصصة بسرعة، فحلولنا جاهزة لمساعدتك.
+      نذهب أبعد خطوة لنوصلك بالأشخاص المناسبين حقًا.
+    </p>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="services-main container">
+    <!-- للباحثين عن عمل -->
+    <section id="jobseekers">
+      <h2>للباحثين عن عمل</h2>
+      <div class="card-box">
+        <p>
+          نربط الكفاءات المتميزة بشركات رائدة في مجالات متعددة. عند إرسال سيرتك وبياناتك إلى
+          <strong>cv@innovation-rs.com</strong> نضيفك لقاعدة البيانات ونطابق ملفك مع أصحاب العمل الذين يبحثون عن خبراتك.
+          ابقَ جاهزًا — الفرص أقرب مما تتصور!
+        </p>
+        <a class="btn-pill" href="./jobseeker-ar.html">اعرف المزيد</a>
+      </div>
+    </section>
+
+    <!-- لأصحاب العمل -->
+    <section id="employers" style="margin-top:40px;">
+      <h2>لأصحاب العمل</h2>
+      <div class="card-box">
+        <p>
+          وظّف بثقة. نوفر ثلاث حزم — الشركات الصغيرة والمتوسطة (SME)، الشركات الكبرى (Enterprise)، والبحث التنفيذي —
+          ونقدّم دفعات سير ذاتية مُنتقاة ومتوافقة مع متطلبات الدور الوظيفي. اطّلع على آلية كل حزمة وكيف تبدأ.
+        </p>
+        <a class="btn-pill" href="./employers-ar.html">اعرف المزيد</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER (عربي) ===== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <div class="f-brand">
+          <img src="../assets/photos/LOGO.png" alt="شعار الابتكار">
+          <div>
+            <strong>خدمات الابتكار للتوظيف</strong>
+            <p>التوظيف بطريقة بسيطة وسريعة وشفافة.</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="footer-col">
+        <h4>تصفح</h4>
+        <ul class="f-links">
+          <li><a href="./index-ar.html">الرئيسية</a></li>
+          <li><a href="./about/index-ar.html">من نحن</a></li>
+          <li><a href="./services-ar.html">الخدمات</a></li>
+          <li><a href="./employers-ar.html">أصحاب العمل</a></li>
+          <li><a href="./jobseeker-ar.html">الباحثين عن عمل</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <p class="f-muted">تواصل معنا عبر واتساب:</p>
+
+        <!-- UAE -->
+        <a class="wa-chip" target="_blank" rel="noopener"
+          href="https://wa.me/971567882244?text=Hello%20Innovation%20RS%2C%20I%27d%20like%20to%20get%20in%20touch.">
+          <span class="wa-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M20,3A10,10 0 0,1 20,23L16.87,22.2L4,20L6.1,17.13A8,8 0 1,1 20,3M12,5.9A6.1,6.1 0 0,0 6,12C6,13.22 6.35,14.36 6.95,15.31L6.5,17.5L8.76,17.07C9.67,17.63 10.8,18 12,18A6.1,6.1 0 0,0 18.1,11.9A6.1,6.1 0 0,0 12,5.9M9.37,8.75C9.5,8.75 9.63,8.76 9.75,8.8C10.05,8.9 10.56,9.15 10.76,9.71C10.95,10.25 10.95,10.79 10.89,11.09C10.83,11.39 10.64,11.7 10.4,11.97C10.29,12.09 10.19,12.2 10.12,12.29C10.05,12.38 10.07,12.45 10.12,12.53C10.17,12.61 10.53,13.36 11.32,14.06C12.27,14.89 13.08,15.1 13.47,15.16C13.86,15.22 14.12,15.15 14.31,15.08C14.5,15 14.81,14.8 15.06,14.6C15.31,14.4 15.53,14.33 15.75,14.4C15.97,14.47 16.86,14.91 17.09,15.04C17.32,15.17 17.39,15.3 17.44,15.42C17.5,15.54 17.5,15.7 17.42,15.86C17.33,16.02 16.75,17.16 15.67,17.56C14.59,17.96 13.34,17.84 12.09,17.45C10.84,17.06 9.64,16.34 8.68,15.44C7.72,14.54 6.9,13.34 6.51,12.09C6.12,10.84 6,9.59 6.4,8.51C6.8,7.43 7.94,6.85 8.1,6.76C8.22,6.7 8.3,6.69 8.37,6.69Z"/></svg>
+          </span>
+          <span>واتساب (الإمارات): <strong dir="ltr">+971 56 788 2244</strong></span>
+        </a>
+
+        <!-- Jordan -->
+        <a class="wa-chip" target="_blank" rel="noopener"
+          href="https://wa.me/962771333999?text=Hello%20Innovation%20RS%2C%20I%27d%20like%20to%20get%20in%20touch.">
+          <span class="wa-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M20,3A10,10 0 0,1 20,23L16.87,22.2L4,20L6.1,17.13A8,8 0 1,1 20,3M12,5.9A6.1,6.1 0 0,0 6,12C6,13.22 6.35,14.36 6.95,15.31L6.5,17.5L8.76,17.07C9.67,17.63 10.8,18 12,18A6.1,6.1 0 0,0 18.1,11.9A6.1,6.1 0 0,0 12,5.9M9.37,8.75C9.5,8.75 9.63,8.76 9.75,8.8C10.05,8.9 10.56,9.15 10.76,9.71C10.95,10.25 10.95,10.79 10.89,11.09C10.83,11.39 10.64,11.7 10.4,11.97C10.29,12.09 10.19,12.2 10.12,12.29C10.05,12.38 10.07,12.45 10.12,12.53C10.17,12.61 10.53,13.36 11.32,14.06C12.27,14.89 13.08,15.1 13.47,15.16C13.86,15.22 14.12,15.15 14.31,15.08C14.5,15 14.81,14.8 15.06,14.6C15.31,14.4 15.53,14.33 15.75,14.4C15.97,14.47 16.86,14.91 17.09,15.04C17.32,15.17 17.39,15.3 17.44,15.42C17.5,15.54 17.5,15.7 17.42,15.86C17.33,16.02 16.75,17.16 15.67,17.56C14.59,17.96 13.34,17.84 12.09,17.45C10.84,17.06 9.64,16.34 8.68,15.44C7.72,14.54 6.9,13.34 6.51,12.09C6.12,10.84 6,9.59 6.4,8.51C6.8,7.43 7.94,6.85 8.1,6.76C8.22,6.7 8.3,6.69 8.37,6.69Z"/></svg>
+          </span>
+          <span>واتساب (الأردن): <strong dir="ltr">+962 77 133 3999</strong></span>
+        </a>
+        
+      </div>
+            <!-- Social media -->
+<div class="footer-col">
+  <h4>تابعنا</h4>
+  <ul class="social-links">
+    <li>
+      <a class="social-chip" target="_blank" rel="noopener"
+         href="https://www.linkedin.com/company/your-company" aria-label="Follow us on LinkedIn">
+        <span class="social-ico" aria-hidden="true">
+          <!-- LinkedIn -->
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.07c.67-1.2 2.3-2.47 4.73-2.47C22 7.73 24 10 24 14.2V24h-5v-8.5c0-2.03-.04-4.65-2.83-4.65-2.83 0-3.27 2.21-3.27 4.5V24H8z"/></svg>
+        </span>
+        <span>لينكدإن</span>
+      </a>
+    </li>
+    <li>
+      <a class="social-chip" target="_blank" rel="noopener"
+         href="https://www.instagram.com/your-company" aria-label="Follow us on Instagram">
+        <span class="social-ico" aria-hidden="true">
+          <!-- Instagram -->
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.9.26 2.35.44.59.23 1.01.5 1.46.95.45.45.72.87.95 1.46.18.45.38 1.15.44 2.35.07 1.32.07 1.68.07 4.9s0 3.58-.07 4.9c-.06 1.2-.26 1.9-.44 2.35a3.9 3.9 0 0 1-.95 1.46 3.9 3.9 0 0 1-1.46.95c-.45.18-1.15.38-2.35.44-1.32.07-1.68.07-4.9.07s-3.58 0-4.9-.07c-1.2-.06-1.9-.26-2.35-.44a3.9 3.9 0 0 1-1.46-.95 3.9 3.9 0 0 1-.95-1.46c-.18-.45-.38-1.15-.44-2.35C2.2 15.58 2.2 15.2 2.2 12s0-3.58.07-4.9c.06-1.2.26-1.9.44-2.35.23-.59.5-1.01.95-1.46.45-.45.87-.72 1.46-.95.45-.18 1.15-.38 2.35-.44C8.42 2.2 8.8 2.2 12 2.2m0 1.8c-3.16 0-3.53 0-4.77.07-1.02.05-1.57.22-1.94.36-.49.19-.84.41-1.21.78-.37.37-.59.72-.78 1.21-.14.37-.31.92-.36 1.94-.07 1.24-.07 1.61-.07 4.77s0 3.53.07 4.77c.05 1.02.22 1.57.36 1.94.19.49.41.84.78 1.21.37.37.72.59 1.21.78.37.14.92.31 1.94.36 1.24.07 1.61.07 4.77.07s3.53 0 4.77-.07c1.02-.05 1.57-.22 1.94-.36.49-.19.84-.41 1.21-.78.37-.37.59-.72.78-1.21.14-.37.31-.92.36-1.94.07-1.24.07-1.61.07-4.77s0-3.53-.07-4.77c-.05-1.02-.22-1.57-.36-1.94-.19-.49-.41-.84-.78-1.21a3.1 3.1 0 0 0-1.21-.78c-.37-.14-.92-.31-1.94-.36-1.24-.07-1.61-.07-4.77-.07m0 3.2a6.8 6.8 0 1 1 0 13.6 6.8 6.8 0 0 1 0-13.6m0 11.2a4.4 4.4 0 1 0 0-8.8 4.4 4.4 0 0 0 0 8.8m5.5-11.9a1.6 1.6 0 1 1 0-3.2 1.6 1.6 0 0 1 0 3.2z"/></svg>
+        </span>
+        <span>إنستغرام</span>
+      </a>
+    </li>
+    <li>
+      <a class="social-chip" target="_blank" rel="noopener"
+         href="https://www.facebook.com/your-company" aria-label="Follow us on Facebook">
+        <span class="social-ico" aria-hidden="true">
+          <!-- Facebook -->
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.56 9.87v-6.98h-2.7V12h2.7V9.8c0-2.66 1.58-4.13 4-4.13 1.16 0 2.38.21 2.38.21v2.62h-1.34c-1.32 0-1.73.82-1.73 1.66V12h2.95l-.47 2.89h-2.48v6.98A10 10 0 0 0 22 12z"/></svg>
+        </span>
+        <span>فيسبوك</span>
+      </a>
+    </li>
+    <li>
+      <a class="social-chip" target="_blank" rel="noopener"
+         href="https://x.com/your-company" aria-label="Follow us on X">
+        <span class="social-ico" aria-hidden="true">
+          <!-- X (Twitter) -->
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 2H22l-8.1 9.26L23.5 22h-6.63l-5.2-6.08L5.6 22H2l8.65-9.89L.8 2h6.73l4.7 5.6L18.9 2Zm-1.16 18h1.85L6.36 3.99H4.48L17.74 20Z"/></svg>
+        </span>
+        <span>إكس</span>
+      </a>
+    </li>
+  </ul>
+</div>
+    </div>
+
+    <div class="f-bottom">
+      <div class="container f-bottom-inner">
+        <small>© <span id="year"></span> الابتكار. جميع الحقوق محفوظة.</small>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

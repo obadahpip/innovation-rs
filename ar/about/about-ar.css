@@ -1,0 +1,160 @@
+/* ===== Reset & container ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+.container{margin:0 auto;padding-inline:clamp(20px,6vw,96px)}
+html,body{
+  font-family:'Bahij_TheSansArabic',system-ui,sans-serif;
+  width:100%;height:100%;overflow-x:hidden;
+  color:#3e3457;background:#fff;
+}
+
+/* ===== Navbar (full-width bar) ===== */
+.navbar{
+  position:relative;
+  width:100vw;
+  left:50%; right:50%;
+  margin-left:-50vw; margin-right:-50vw;
+  background:#2e2b4f;            /* اللون المعتمد */
+  border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:saturate(140%) blur(6px);
+  z-index:10;
+}
+.navbar-inner{
+  display:grid; grid-template-columns:auto 1fr auto;
+  align-items:center; gap:24px;
+  padding:14px clamp(16px,5vw,48px);
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{height:48px;width:auto}
+.logo h3{margin:0;margin-inline-end:10px;font-weight:800;color:#fff}
+.nav-links{display:flex;gap:24px;list-style:none;justify-content:center}
+.nav-links a{color:#fff;text-decoration:none;font-weight:800;letter-spacing:.2px}
+.nav-links a:hover{opacity:.92}
+.is-active{position:relative}
+.is-active::after{
+  content:'';position:absolute;inset-inline-end:0;inset-block-end:-8px;width:100%;height:3px;background:#ff477e;border-radius:3px;
+}
+/* زر اللغة يسار */
+.lang-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border:2px solid #fff;border-radius:10px;
+  background:transparent;color:#fff;font-weight:800;text-decoration:none;
+  transition:background .2s, transform .1s, opacity .2s;
+}
+.lang-btn:hover{background:rgba(255,255,255,.12)}
+.lang-btn:active{transform:translateY(1px)}
+@media (max-width:600px){
+  .lang-btn{padding:8px}
+  .lang-btn .lang-text{display:none}
+}
+
+/* ===== About – hero split (من about.css) ===== */
+.About-Sec{display:flex;min-height:520px;width:100%}
+.About-Content{
+  flex:1;background:#3e3457;color:#fff;
+  padding:64px clamp(24px,6vw,120px);
+  display:flex;flex-direction:column;justify-content:center
+}
+.About-Content h1{font-weight:800;font-size:56px;color:#fff;margin-bottom:12px;line-height:1.1}
+.About-Content h1 span{color:#f5c9bf}
+.About-Content p{font-weight:700;opacity:.95}
+.About-Image{
+  flex:1;min-height:420px;
+  background:url('../assets/photos/peopleoffice.jpg') center/cover no-repeat
+}
+
+/* ===== About Cards (من about.css) ===== */
+.About-Card{
+  display:flex;align-items:center;gap:28px;width:100%;
+  padding:96px clamp(24px,6vw,120px)
+}
+.About-Card-Image{flex:1;display:flex;align-items:center;justify-content:center}
+.About-Card-Image img{
+  width:100%;max-width:720px;height:auto;border-radius:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.35)
+}
+.About-Card-Content{flex:1}
+.About-Card-Content h2{font-size:44px;font-weight:800;color:#3e3457;margin-bottom:8px;line-height:1.15}
+.About-Card-Content h2 span{color:#e37620}
+.About-Card-Content p{font-weight:700;color:#3e3457}
+.second{background:#eff0f0}
+.About-Image{
+  flex:1;min-height:420px;
+  background:url('../../assets/photos/peopleoffice.jpg') center/cover no-repeat;
+}
+
+/* ===== Footer (نفس ستايلك الأصلي) ===== */
+.site-footer{background:#2e2b4f;color:#e9e7f5;margin-top:48px;}
+.footer-grid{display:grid;grid-template-columns:1.2fr .8fr 1fr;gap:28px;padding:34px 0;}
+@media (max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:640px){.footer-grid{grid-template-columns:1fr;}}
+
+.f-brand{display:flex;gap:12px;align-items:center;}
+.f-brand img{height:36px;width:auto;}
+.f-brand p{margin:.2rem 0 0;color:#bcb8d8;font-size:.95rem;}
+
+.footer-col h4{margin:0 0 10px;color:#fff;font-size:1.05rem;}
+.footer-col{margin-right: 15px;}
+.f-links{list-style:none;padding:0;margin:0;}
+.f-links li{margin:8px 0;}
+.f-links a{color:#d9d6ea;text-decoration:none;}
+.f-links a:hover{color:#fff;text-decoration:underline;}
+.f-muted{color:#bcb8d8;margin:0 0 10px;}
+
+.wa-chip{
+  display:flex;align-items:center;gap:10px;background:#2a9d55;color:#fff;text-decoration:none;
+  padding:10px 12px;border-radius:999px;font-weight:700;width:max-content;margin-bottom:10px;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);transition:transform .15s ease, opacity .15s ease;
+}
+.wa-chip:hover{transform:translateY(-1px);opacity:.95;}
+.wa-ico{display:inline-flex;width:18px;height:18px;}
+.wa-ico svg{width:18px;height:18px;fill:currentColor;}
+
+.f-bottom{border-top:1px solid rgba(255,255,255,.1);background:#282543;}
+.f-bottom-inner{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;}
+
+/* Social chips (footer) */
+.social-links{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.social-chip{
+  display:flex; align-items:center; gap:10px;
+  background:rgba(255,255,255,.06); color:#fff; text-decoration:none;
+  padding:10px 12px; border-radius:999px; font-weight:700;
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+  transition:transform .15s ease, opacity .15s ease, background .2s ease;
+}
+.social-chip:hover{ transform:translateY(-1px); opacity:.96; background:rgba(255,255,255,.12); }
+.social-ico{ display:inline-flex; width:18px; height:18px; }
+.social-ico svg{ width:18px; height:18px; fill:currentColor; }
+
+/* Optional: compact on very small screens */
+@media (max-width:600px){
+  .social-chip{ padding:9px 12px; }
+}
+
+/* ===== Responsive tweaks (مأخوذة من about.css ومكيّفة) ===== */
+@media (max-width:1024px){
+  .About-Content{padding:56px clamp(24px,6vw,80px)}
+  .About-Content h1{font-size:48px}
+  .About-Card{padding:72px clamp(24px,6vw,80px)}
+  .About-Card-Content h2{font-size:38px}
+}
+@media (max-width:900px){
+  .logo img{height:32px}
+  .logo h3{font-size:1rem;}
+  .nav-links{gap:14px}
+  .About-Sec{flex-direction:column}
+  .About-Image{order:2;min-height:280px}
+  .About-Content{order:1;padding:48px clamp(20px,6vw,56px)}
+  .About-Content h1{font-size:42px}
+  .About-Card{flex-direction:column;padding:56px clamp(20px,6vw,56px);text-align:center}
+  .About-Card-Image{order:1}
+  .About-Card-Content{order:2}
+  .About-Card-Image img{max-width:640px}
+}
+@media (max-width:600px){
+  .nav-links a{font-size:.95rem}
+  .About-Content{padding:40px 20px}
+  .About-Content h1{font-size:34px}
+  .About-Card{padding:40px 20px}
+  .About-Card-Content h2{font-size:30px}
+  .footer-grid{grid-template-columns:1fr}
+}
