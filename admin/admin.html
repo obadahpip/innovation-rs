@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Innovation RS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand h2 {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .navbar-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header h1 {
+            color: #2e2b4f;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .dashboard-header p {
+            color: #6b6a7a;
+            font-size: 16px;
+        }
+
+        .main-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .card-title {
+            color: #2e2b4f;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .success-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e8f4f8 100%);
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .success-section.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .link-display {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .link-text {
+            flex: 1;
+            color: #333;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            font-size: 13px;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+        }
+
+        .copy-btn.copied {
+            background: #27ae60;
+        }
+
+        .qr-section {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .qr-section p {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .qr-code {
+            display: inline-block;
+            padding: 10px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+        }
+
+        .amount-display {
+            font-size: 24px;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .detail-label {
+            color: #999;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        .info-box p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-brand">
+            <h2>Innovation RS</h2>
+            <div class="navbar-badge">ADMIN</div>
+        </div>
+        <div class="navbar-right">
+            <div class="user-info">
+                👤 <span id="usernameDisplay">Admin</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>💼 Payment Link Generator</h1>
+            <p>Generate custom payment links for clients and partners</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="main-card">
+            <h2 class="card-title">📝 Create Payment Link</h2>
+
+            <form id="amountForm" onsubmit="generateLink(event)">
+                <div class="form-group">
+                    <label for="amount">Payment Amount (USD)</label>
+                    <input 
+                        type="number" 
+                        id="amount" 
+                        placeholder="Enter amount (e.g., 150.00)"
+                        min="1"
+                        step="0.01"
+                        required
+                    >
+                    <p class="error-message" id="amountError"></p>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        ✨ Generate Link
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        Clear
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success Section -->
+            <div class="success-section" id="successSection">
+                <div class="success-title">
+                    ✅ Link Generated Successfully
+                </div>
+
+                <div class="amount-display">
+                    $<span id="displayAmount">0.00</span>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Plan Type</div>
+                        <div class="detail-value">Executive (Custom)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Created</div>
+                        <div class="detail-value" id="createdTime">-</div>
+                    </div>
+                </div>
+
+                <div class="link-display">
+                    <span class="link-text" id="generatedLink">innovation-rs.com/admin/payment-admin.html?plan=exec&amount=0</span>
+                    <button type="button" class="copy-btn" onclick="copyLink()">
+                        📋 Copy
+                    </button>
+                </div>
+
+                <div class="qr-section">
+                    <p>🔗 Share this link with your client:</p>
+                    <code style="background: #f0f0f0; padding: 10px; border-radius: 6px; display: block; word-break: break-all; font-size: 12px;">
+                        <span id="fullLink"></span>
+                    </code>
+                </div>
+
+                <button type="button" class="btn btn-secondary" onclick="resetForm()" style="margin-top: 15px;">
+                    ➕ Create Another Link
+                </button>
+            </div>
+
+            <div class="info-box">
+                <p><strong>💡 Tips:</strong></p>
+                <ul style="margin-left: 20px; color: #666; font-size: 13px; line-height: 1.6;">
+                    <li>Enter any custom amount for your client</li>
+                    <li>Copy the generated link and send it to your client</li>
+                    <li>The client will see a fixed amount they must pay</li>
+                    <li>They cannot modify the payment amount on their page</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        function checkLogin() {
+            if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
+                window.location.href = './admin-login.html';
+                return;
+            }
+        }
+
+        // Update username display
+        function updateUserDisplay() {
+            const username = 'innovation-rs-admin';
+            document.getElementById('usernameDisplay').textContent = username;
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            sessionStorage.removeItem('adminLoginTime');
+            window.location.href = './admin-login.html';
+        }
+
+        function generateLink(event) {
+            event.preventDefault();
+
+            const amountInput = document.getElementById('amount');
+            const amount = parseFloat(amountInput.value);
+            const amountError = document.getElementById('amountError');
+            const successSection = document.getElementById('successSection');
+
+            // Clear previous errors
+            amountError.style.display = 'none';
+
+            // Validation
+            if (!amount || amount < 1) {
+                amountError.textContent = 'Please enter a valid amount (minimum $1.00)';
+                amountError.style.display = 'block';
+                return;
+            }
+
+            // Format amount to 2 decimal places
+            const formattedAmount = amount.toFixed(2);
+
+            // Generate link
+            const link = `innovation-rs.com/admin/payment-admin.html?plan=exec&amount=${formattedAmount}`;
+            const fullLink = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + link.substring(2);
+
+            // Get current time
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+
+            // Update display
+            document.getElementById('generatedLink').textContent = link;
+            document.getElementById('fullLink').textContent = link;
+            document.getElementById('displayAmount').textContent = formattedAmount;
+            document.getElementById('createdTime').textContent = timeString;
+
+            // Show success section
+            successSection.classList.add('show');
+
+            // Scroll to result
+            setTimeout(() => {
+                successSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        function copyLink() {
+            const link = document.getElementById('generatedLink').textContent;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(link).then(() => {
+                const copyBtn = event.target;
+                const originalText = copyBtn.textContent;
+                
+                // Show confirmation
+                copyBtn.textContent = '✅ Copied!';
+                copyBtn.classList.add('copied');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                alert('Failed to copy link. Please try again.');
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('amountForm').reset();
+            document.getElementById('successSection').classList.remove('show');
+            document.getElementById('amount').focus();
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            checkLogin();
+            updateUserDisplay();
+        });
+
+        // Allow Enter key to submit
+        document.getElementById('amountForm').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                generateLink(event);
+            }
+        });
+    </script>
+</body>
+</html>

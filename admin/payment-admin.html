@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Innovation RS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .payment-form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            background-color: #f5f5f5;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .amount-input:disabled {
+            opacity: 1;
+            cursor: not-allowed;
+            border-color: #667eea;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .read-only-notice {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            color: #1976d2;
+            font-size: 13px;
+        }
+
+        .paypal-button-container {
+            margin-top: 30px;
+            min-height: 50px;
+        }
+
+        .info-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .info-box p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .secure-badge::before {
+            content: "🔒";
+            margin-right: 5px;
+        }
+
+        .plan-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .plan-banner h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .plan-banner p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .amount-display {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+            text-align: center;
+            margin: 20px 0;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .currency-symbol {
+            font-size: 28px;
+        }
+
+        .invalid-link {
+            background: #fee;
+            border: 2px solid #f00;
+            color: #c00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>Innovation RS</h1>
+            <p>Secure Payment Portal</p>
+        </div>
+
+        <div class="payment-form">
+            <div id="invalidLink" class="invalid-link" style="display:none;">
+                ⚠️ Invalid payment link. Please check the URL and try again.
+                <a href="javascript:window.close()" class="back-link">Close Window</a>
+            </div>
+
+            <div id="validPayment" style="display:none;">
+                <div class="plan-banner">
+                    <h2>💼 Custom Payment</h2>
+                    <p>Secured Payment Portal</p>
+                </div>
+
+                <div class="amount-display">
+                    <span class="currency-symbol">$</span><span id="displayAmount">0.00</span>
+                </div>
+
+                <div class="read-only-notice">
+                    ℹ️ This payment amount is fixed and cannot be changed.
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Payment Amount (USD) - Read Only</label>
+                    <input 
+                        type="number" 
+                        id="amount" 
+                        class="amount-input" 
+                        placeholder="0.00" 
+                        min="1" 
+                        step="0.01"
+                        value="0.00"
+                        disabled
+                    >
+                    <p class="error-message" id="error"></p>
+                </div>
+
+                <div id="paypal-button-container" class="paypal-button-container"></div>
+
+                <div class="info-box">
+                    <p><strong>🔒 Secure Payment:</strong> Your payment is processed securely through PayPal. We never store your payment information.</p>
+                </div>
+
+                <div class="secure-badge">
+                    Secured by PayPal
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AWOYUzPAtg6oMkc5Blw-I1v3fT_W76vdv7cJL6EC4gkil9RZb3F4Ak6jSE9n6B9TsCKWHw3cAub6geyt&currency=USD"></script>
+
+    <script>
+        const amountInput = document.getElementById('amount');
+        const errorMessage = document.getElementById('error');
+        const displayAmount = document.getElementById('displayAmount');
+        const validPayment = document.getElementById('validPayment');
+        const invalidLink = document.getElementById('invalidLink');
+
+        // Get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        function validateAmount() {
+            const amount = parseFloat(amountInput.value);
+            if (isNaN(amount) || amount < 1) {
+                errorMessage.style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+
+        function renderPayPalButtons() {
+            document.getElementById('paypal-button-container').innerHTML = '';
+            
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    if (!validateAmount()) {
+                        return actions.reject();
+                    }
+                    
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: parseFloat(amountInput.value).toFixed(2)
+                            },
+                            description: 'Custom Payment to Innovation RS'
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        alert('Payment completed successfully! Transaction ID: ' + details.id);
+                        console.log('Payment details:', details);
+                    });
+                },
+                onError: function(err) {
+                    errorMessage.textContent = 'An error occurred during payment. Please try again.';
+                    errorMessage.style.display = 'block';
+                    console.error('PayPal error:', err);
+                },
+                style: {
+                    layout: 'vertical',
+                    color: 'blue',
+                    shape: 'rect',
+                    label: 'pay'
+                }
+            }).render('#paypal-button-container');
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            const amountParam = getUrlParameter('amount');
+            const planParam = getUrlParameter('plan');
+
+            // Validate parameters
+            if (!amountParam || !planParam) {
+                validPayment.style.display = 'none';
+                invalidLink.style.display = 'block';
+                return;
+            }
+
+            const amount = parseFloat(amountParam);
+
+            // Validate amount
+            if (isNaN(amount) || amount < 1) {
+                validPayment.style.display = 'none';
+                invalidLink.style.display = 'block';
+                return;
+            }
+
+            // All valid - set up payment
+            const formattedAmount = amount.toFixed(2);
+            amountInput.value = formattedAmount;
+            displayAmount.textContent = formattedAmount;
+            validPayment.style.display = 'block';
+            invalidLink.style.display = 'none';
+
+            renderPayPalButtons();
+        });
+    </script>
+</body>
+
+</html>
