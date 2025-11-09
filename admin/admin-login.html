@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Innovation RS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-section h1 {
+            color: #667eea;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo-section p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input::placeholder {
+            color: #ccc;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .security-note {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .security-note strong {
+            color: #333;
+        }
+
+        .form-wrapper {
+            position: relative;
+        }
+
+        .loading-spinner {
+            display: none;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-top: 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .loading-spinner.show {
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .show-password-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 6px;
+        }
+
+        .show-password-btn:hover {
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-section">
+            <h1>Innovation RS</h1>
+            <p>Secure Admin Portal</p>
+            <div class="admin-badge">🔐 ADMIN ACCESS</div>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+                <p class="error-message" id="usernameError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                    <button type="button" class="show-password-btn" onclick="togglePasswordVisibility()">
+                        <span id="eyeIcon">👁️</span>
+                    </button>
+                </div>
+                <p class="error-message" id="passwordError"></p>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                Sign In
+            </button>
+
+            <div class="error-message" id="generalError"></div>
+        </form>
+
+        <div class="security-note">
+            <strong>🔒 Security:</strong> This portal uses client-side authentication for demo purposes. Never use in production environments without proper server-side security measures.
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded credentials (for demo only)
+        const ADMIN_USERNAME = 'innovation-rs-admin';
+        const ADMIN_PASSWORD = 'Innovation2025';
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const generalError = document.getElementById('generalError');
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+
+            // Clear previous errors
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+            generalError.style.display = 'none';
+            generalError.textContent = '';
+
+            // Validation
+            if (!username) {
+                usernameError.textContent = 'Username is required';
+                usernameError.style.display = 'block';
+                return;
+            }
+
+            if (!password) {
+                passwordError.textContent = 'Password is required';
+                passwordError.style.display = 'block';
+                return;
+            }
+
+            // Show loading state
+            loginBtn.classList.add('loading');
+            loginBtn.textContent = 'Signing in...';
+
+            // Simulate server delay
+            setTimeout(() => {
+                if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                    // Login successful
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    sessionStorage.setItem('adminLoginTime', new Date().getTime());
+                    
+                    // Redirect to admin page
+                    window.location.href = './admin.html';
+                } else if (username !== ADMIN_USERNAME) {
+                    // Username incorrect
+                    usernameError.textContent = 'Username not found';
+                    usernameError.style.display = 'block';
+                    loginBtn.classList.remove('loading');
+                    loginBtn.textContent = 'Sign In';
+                } else {
+                    // Password incorrect
+                    passwordError.textContent = 'Password is incorrect';
+                    passwordError.style.display = 'block';
+                    loginBtn.classList.remove('loading');
+                    loginBtn.textContent = 'Sign In';
+                }
+            }, 500);
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.textContent = '👁️';
+            }
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('loginForm').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleLogin(event);
+            }
+        });
+
+        // Check if already logged in
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                window.location.href = './admin.html';
+            }
+        });
+    </script>
+</body>
+</html>
