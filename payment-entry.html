@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Innovation RS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px; width: 100%; padding: 40px; animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo h1 { color: #2e2b4f; font-size: 28px; margin-bottom: 5px; }
+        .logo p { color: #666; font-size: 14px; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; color: #333; font-weight: 600; margin-bottom: 8px; }
+        input { width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; 
+            font-size: 16px; transition: all 0.3s; }
+        input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+        .preset-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .plan-btn { padding: 12px; border: 2px solid #e0e0e0; background: white; border-radius: 8px;
+            cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .plan-btn:hover { border-color: #667eea; background: #f8f9ff; }
+        .plan-btn.active { border-color: #667eea; background: #667eea; color: white; }
+        #paypal-button-container { margin-top: 30px; min-height: 50px; }
+        .info-box { background: #f8f9ff; border-left: 4px solid #667eea; padding: 15px; 
+            border-radius: 8px; margin-top: 20px; }
+        .info-box p { color: #666; font-size: 13px; line-height: 1.6; }
+        .error { color: #e74c3c; font-size: 14px; margin-top: 10px; display: none; }
+        .loading { text-align: center; color: #667eea; }
+        .badge { display: inline-block; background: #e8f4f8; color: #0288d1; padding: 4px 8px; 
+            border-radius: 4px; font-size: 12px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>💼 Innovation RS</h1>
+            <p>Secure Payment Portal</p>
+        </div>
+
+        <div class="payment-form" id="paymentForm">
+            <!-- Plan Selection or Custom Amount -->
+            <div class="form-group">
+                <label id="amountLabel">Select Plan or Enter Amount (USD)</label>
+                <input type="number" id="amount" placeholder="0.00" min="1" step="0.01">
+                <span id="planBadge" class="badge" style="display: none;"></span>
+                
+                <div class="preset-plans" id="presetPlans">
+                    <button class="plan-btn" data-plan="sme" data-amount="50">SME<br>$50</button>
+                    <button class="plan-btn" data-plan="ent" data-amount="100">ENT<br>$100</button>
+                    <button class="plan-btn" data-plan="executive" data-amount="500">EXEC<br>$500</button>
+                </div>
+
+                <p class="error" id="error"></p>
+            </div>
+
+            <div id="paypal-button-container"></div>
+
+            <div class="info-box">
+                <p><strong>🔒 Secure Payment:</strong> Processed through PayPal. We never store card details.</p>
+                <p style="margin-top: 10px;">After payment, your account will be upgraded immediately and a receipt emailed.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AaEVDCkhV-lCQOfwcsMR6wHzSbpktUGGf9WY1FrCeBc9nLw1wcb4jHNi0d-jDPG7J5SVCHjvpa_Cvg2x&currency=USD"></script>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const presetPlan = urlParams.get('plan');
+        const customToken = urlParams.get('token');
+        const amountInput = document.getElementById('amount');
+        const planBadge = document.getElementById('planBadge');
+        const presetPlans = document.getElementById('presetPlans');
+        const errorMsg = document.getElementById('error');
+        let selectedPlan = null;
+        let selectedAmount = null;
+
+        // Load custom amount if token provided
+        if (customToken) {
+            fetch(`/api/payment-link/${customToken}`)
+                .then(r => r.json())
+                .then(data => {
+                    amountInput.value = data.amount;
+                    selectedAmount = data.amount;
+                    selectedPlan = data.plan_type;
+                    presetPlans.style.display = 'none';
+                    document.getElementById('amountLabel').textContent = `Custom Amount: $${data.amount}`;
+                    renderPayPalButtons();
+                })
+                .catch(() => showError('Invalid payment link'));
+        }
+
+        // Preset plan buttons
+        document.querySelectorAll('.plan-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                amountInput.value = this.dataset.amount;
+                selectedAmount = parseFloat(this.dataset.amount);
+                selectedPlan = this.dataset.plan;
+                planBadge.textContent = `Plan: ${this.dataset.plan.toUpperCase()}`;
+                planBadge.style.display = 'inline-block';
+                errorMsg.style.display = 'none';
+                renderPayPalButtons();
+            });
+        });
+
+        // Manual amount input
+        amountInput.addEventListener('input', function() {
+            document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('active'));
+            planBadge.style.display = 'none';
+            selectedAmount = parseFloat(this.value);
+            selectedPlan = 'custom';
+            errorMsg.style.display = 'none';
+            renderPayPalButtons();
+        });
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.style.display = 'block';
+        }
+
+        function validateAmount() {
+            const amount = parseFloat(amountInput.value);
+            if (isNaN(amount) || amount < 1) {
+                showError('Please enter a valid amount (minimum $1.00)');
+                return false;
+            }
+            return true;
+        }
+
+        function renderPayPalButtons() {
+            document.getElementById('paypal-button-container').innerHTML = '';
+            
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    if (!validateAmount()) return actions.reject();
+                    
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: parseFloat(amountInput.value).toFixed(2)
+                            },
+                            description: `Payment to Innovation RS (${selectedPlan.toUpperCase()})`
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        // Send to backend to record payment & send bill
+                        fetch('/api/capture-paypal-order', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                orderID: details.id,
+                                plan: selectedPlan
+                            })
+                        })
+                        .then(r => r.json())
+                        .then(res => {
+                            if (res.ok) {
+                                alert('✅ Payment successful! Bill sent to your email.\n\nYou can now post jobs.');
+                                window.location.href = '/employers.html';
+                            } else {
+                                showError(res.error || 'Payment recorded but bill generation failed.');
+                            }
+                        })
+                        .catch(e => showError('Error processing payment: ' + e.message));
+                    });
+                },
+                onError: function(err) {
+                    showError('Payment error: ' + (err.message || 'Unknown error'));
+                    console.error(err);
+                },
+                style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay' }
+            }).render('#paypal-button-container');
+        }
+
+        // Set preset if URL param provided
+        if (presetPlan) {
+            const btn = document.querySelector(`[data-plan="${presetPlan}"]`);
+            if (btn) btn.click();
+        }
+
+        // Initial render
+        renderPayPalButtons();
+    </script>
+</body>
+</html>
